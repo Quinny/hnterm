@@ -25,9 +25,6 @@ var postList = blessed.list({
         }
     },
     items: [
-        //'hey',
-        //'there',
-        //'fucker'
     ]
 });
 
