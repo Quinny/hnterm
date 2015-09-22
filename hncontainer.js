@@ -1,5 +1,5 @@
 var blessed = require("blessed");
-var hn = require("./hn.js");
+var hn      = require("./hn.js");
 
 exports.container = function() {
     var hnui = this;
@@ -14,6 +14,10 @@ exports.container = function() {
 
     hnui.screen.key("up", function(ch, key) {
         hnui.views[hnui.view].upArrow(hnui);
+    });
+
+    hnui.screen.key("down", function(ch, key) {
+        hnui.views[hnui.view].downArrow(hnui);
     });
 
     hnui.screen.key(['escape', 'q', 'C-c'], function(ch, key) {

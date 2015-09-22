@@ -1,4 +1,4 @@
-var https = require("https");
+var https   = require("https");
 var baseUrl = "https://hacker-news.firebaseio.com/v0/";
 
 // Makes get request and calls callback with the returned JSON
