@@ -3,6 +3,7 @@ exports.View = function() {
         upArrow:   function(container) {},
         downArrow: function(container) {},
         enterKey:  function(container) {},
-        render:    function(container, options) {}
+        render:    function(container, options) {},
+        close:     function(container) {}
     };
 }

@@ -1,21 +1,24 @@
 {
-    "keys": {
-        "up":    "up",
-        "down":  "down",
-        "enter": "enter",
-        "quit":  ["escape", "q", "C-c"]
+    "keys":        {
+        "up":      "up",
+        "down":    "down",
+        "enter":   "enter",
+        "quit":    ["escape", "q", "C-c"],
+        "search":  "/",
+        "jobs":    "j",
+        "stories": "s"
     },
     "cache": {
         "dir":              "./.cache/",
         "expires_in_hours": 1
     },
     "size": {
-        "width": "90%",
-        "height": "90%"
+        "width": "95%",
+        "height": "95%"
     },
-    "colors": {
-        "border": "white",
+    "colors":       {
+        "border":   "white",
         "selected": "red",
-        "font"    : "white"
+        "font":     "white"
     }
 }

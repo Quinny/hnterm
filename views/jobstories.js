@@ -28,16 +28,16 @@ var postList = blessed.list({
     ]
 });
 
-storiesView = new views.View();
+jobStoriesView = new views.View();
 var selected = 0;
 var stories = [];
 
-storiesView.render = function(container, options) {
+jobStoriesView.render = function(container, options) {
     container.screen.append(postList);
     postList.focus();
     container.screen.render();
 
-    hn.topStories(function(s) {
+    hn.jobStories(function(s) {
         stories = s;
         postList.clearItems();
         for (var i = 0; i < s.length; ++i)
@@ -46,26 +46,26 @@ storiesView.render = function(container, options) {
     });
 }
 
-storiesView.close = function(container) {
+jobStoriesView.close = function(container) {
     container.screen.remove(postList);
 }
 
-storiesView.upArrow = function(container) {
+jobStoriesView.upArrow = function(container) {
     if (selected > 0)
         --selected;
     postList.up(1);
     container.screen.render();
 };
 
-storiesView.downArrow = function(container) {
+jobStoriesView.downArrow = function(container) {
     if (selected < stories.length)
         ++selected;
     postList.down(1);
     container.screen.render();
 };
 
-storiesView.enterKey = function() {
-    spawn('open', [stories[selected].url]);
+jobStoriesView.enterKey = function() {
+    //spawn('open', [stories[selected].url]);
 }
 
-module.exports = storiesView;
+module.exports = jobStoriesView;

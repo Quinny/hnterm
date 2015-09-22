@@ -36,7 +36,7 @@ function hnGet(endPoint) {
                         var expires = new Date();
                         expires.setHours(expires.getHours() +
                                 config.cache.expires_in_hours);
-                        cache.put(cacheCode, ret, expires);
+                        cache.put(endPoint, ret, expires);
                         callback(ret);
                     }
                 });

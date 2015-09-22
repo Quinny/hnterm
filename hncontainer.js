@@ -5,12 +5,14 @@ var config  = require("./config.json");
 exports.container = function() {
     var hnui = this;
     hnui.view = "stories";
+
     hnui.screen = blessed.screen({
         smartCSR: true
     });
 
     hnui.views = {
-        "stories": require("./views/topstories.js")
+        "stories": require("./views/topstories.js"),
+        "jobs"   : require("./views/jobstories.js")
     }
 
     hnui.screen.key(config.keys.up, function(ch, key) {
@@ -25,11 +27,20 @@ exports.container = function() {
        hnui.views[hnui.view].enterKey(hnui);
     });
 
+    hnui.screen.key(config.keys.jobs, function(ch, key) {
+        hnui.changeView("jobs", {});
+    });
+
+    hnui.screen.key(config.keys.stories, function(ch, key) {
+        hnui.changeView("stories", {});
+    });
+    
     hnui.screen.key(config.keys.quit, function(ch, key) {
           return process.exit(0);
     });
 
     hnui.changeView = function(view, options) {
+        hnui.views[hnui.view].close(hnui);
         hnui.view = view;
         hnui.views[view].render(hnui, options);
     };
