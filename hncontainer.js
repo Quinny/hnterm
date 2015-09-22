@@ -20,9 +20,18 @@ exports.container = function() {
         hnui.views[hnui.view].downArrow(hnui);
     });
 
+    hnui.screen.key("enter", function(ch, key) { 
+       hnui.views[hnui.view].enterKey(hnui); 
+    });
+
     hnui.screen.key(['escape', 'q', 'C-c'], function(ch, key) {
           return process.exit(0);
     });
+
+    hnui.changeView = function(view, options) {
+        hnui.view = view;
+        hnui.views[view].render(hnui, options);
+    };
 
     hnui.views[hnui.view].render(hnui);
 }
