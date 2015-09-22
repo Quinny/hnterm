@@ -1,5 +1,6 @@
 var blessed = require("blessed");
 var hn      = require("./hn.js");
+var config  = require("./config.json");
 
 exports.container = function() {
     var hnui = this;
@@ -9,22 +10,22 @@ exports.container = function() {
     });
 
     hnui.views = {
-        "stories": require("./views/stories.js")
+        "stories": require("./views/topstories.js")
     }
 
-    hnui.screen.key("up", function(ch, key) {
+    hnui.screen.key(config.keys.up, function(ch, key) {
         hnui.views[hnui.view].upArrow(hnui);
     });
 
-    hnui.screen.key("down", function(ch, key) {
+    hnui.screen.key(config.keys.down, function(ch, key) {
         hnui.views[hnui.view].downArrow(hnui);
     });
 
-    hnui.screen.key("enter", function(ch, key) { 
-       hnui.views[hnui.view].enterKey(hnui); 
+    hnui.screen.key(config.keys.enter, function(ch, key) {
+       hnui.views[hnui.view].enterKey(hnui);
     });
 
-    hnui.screen.key(['escape', 'q', 'C-c'], function(ch, key) {
+    hnui.screen.key(config.keys.quit, function(ch, key) {
           return process.exit(0);
     });
 

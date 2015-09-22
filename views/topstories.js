@@ -1,23 +1,26 @@
 var blessed = require("blessed");
+var spawn   = require('child_process').spawn
 var views   = require("./view.js");
 var hn      = require("../hn.js");
-var spawn   = require('child_process').spawn
+var config  = require("../config.json");
 
 var postList = blessed.list({
     top: 'center',
     left: 'center',
-    width: '80%',
-    height: '80%',
+    width: config.size.width,
+    height: config.size.height,
     tags: true,
     border: {
         type: 'line'
     },
     style: {
+        fg: config.colors.font,
         border: {
-            fg: '#f0f0f0'
+            fg: config.colors.border
         },
         selected: {
-            bg: "#ff0000"
+            fg: config.colors.font,
+            bg: config.colors.selected
         }
     },
     items: [
@@ -38,7 +41,7 @@ storiesView.render = function(container, options) {
         stories = s;
         postList.clearItems();
         for (var i = 0; i < s.length; ++i)
-            postList.add((i + 1).toString() + ". " + s[i].title + " " + s[i].type);
+            postList.add((i + 1).toString() + ". " + s[i].title);
         container.screen.render();
     });
 }

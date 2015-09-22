@@ -1,0 +1,21 @@
+{
+    "keys": {
+        "up":    "up",
+        "down":  "down",
+        "enter": "enter",
+        "quit":  ["escape", "q", "C-c"]
+    },
+    "cache": {
+        "dir":              "./.cache/",
+        "expires_in_hours": 1
+    },
+    "size": {
+        "width": "90%",
+        "height": "90%"
+    },
+    "colors": {
+        "border": "white",
+        "selected": "red",
+        "font"    : "white"
+    }
+}
