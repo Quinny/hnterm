@@ -12,7 +12,8 @@ exports.container = function() {
 
     hnui.views = {
         "stories": require("./views/topstories.js"),
-        "jobs"   : require("./views/jobstories.js")
+        "jobs"   : require("./views/jobstories.js"),
+        "job"    : require("./views/job.js")
     }
 
     hnui.screen.key(config.keys.up, function(ch, key) {
@@ -34,7 +35,7 @@ exports.container = function() {
     hnui.screen.key(config.keys.stories, function(ch, key) {
         hnui.changeView("stories", {});
     });
-    
+
     hnui.screen.key(config.keys.quit, function(ch, key) {
           return process.exit(0);
     });

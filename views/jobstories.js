@@ -1,34 +1,12 @@
 var blessed = require("blessed");
 var spawn   = require('child_process').spawn
-var views   = require("./view.js");
-var hn      = require("../hn.js");
-var config  = require("../config.json");
 
-var postList = blessed.list({
-    top: 'center',
-    left: 'center',
-    width: config.size.width,
-    height: config.size.height,
-    tags: true,
-    border: {
-        type: 'line'
-    },
-    style: {
-        fg: config.colors.font,
-        border: {
-            fg: config.colors.border
-        },
-        selected: {
-            fg: config.colors.font,
-            bg: config.colors.selected
-        }
-    },
-    items: [
-        "Loading..."
-    ]
-});
+var view     = require("./view.js");
+var hn       = require("../hn.js");
+var config   = require("../config.json");
+var postList = require("./post-list.js");
 
-jobStoriesView = new views.View();
+jobStoriesView = new view.View();
 var selected = 0;
 var stories = [];
 
@@ -64,8 +42,10 @@ jobStoriesView.downArrow = function(container) {
     container.screen.render();
 };
 
-jobStoriesView.enterKey = function() {
-    //spawn('open', [stories[selected].url]);
+jobStoriesView.enterKey = function(container) {
+    if (stories[selected].text) {
+        container.changeView("job", stories[selected].text);
+    }
 }
 
 module.exports = jobStoriesView;

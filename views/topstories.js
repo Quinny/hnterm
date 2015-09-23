@@ -1,34 +1,11 @@
-var blessed = require("blessed");
-var spawn   = require('child_process').spawn
-var views   = require("./view.js");
-var hn      = require("../hn.js");
-var config  = require("../config.json");
+var blessed  = require("blessed");
+var spawn    = require('child_process').spawn
+var view     = require("./view.js");
+var hn       = require("../hn.js");
+var config   = require("../config.json");
+var postList = require("./post-list.js");
 
-var postList = blessed.list({
-    top: 'center',
-    left: 'center',
-    width: config.size.width,
-    height: config.size.height,
-    tags: true,
-    border: {
-        type: 'line'
-    },
-    style: {
-        fg: config.colors.font,
-        border: {
-            fg: config.colors.border
-        },
-        selected: {
-            fg: config.colors.font,
-            bg: config.colors.selected
-        }
-    },
-    items: [
-        "Loading..."
-    ]
-});
-
-storiesView = new views.View();
+storiesView = new view.View();
 var selected = 0;
 var stories = [];
 

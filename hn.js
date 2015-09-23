@@ -21,6 +21,7 @@ function makeItem(id, callback) {
     getJSON(baseUrl + "item/" + id + ".json", callback);
 }
 
+// Curried to return a function that makes the API call with a callback
 function hnGet(endPoint) {
     return function(callback) {
         var check = cache.get(endPoint);
