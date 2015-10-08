@@ -2,18 +2,20 @@ var blessed = require("blessed");
 var hn      = require("./hn.js");
 var config  = require("./config.json");
 
+
 exports.container = function() {
     var hnui = this;
     hnui.view = "stories";
-
     hnui.screen = blessed.screen({
         smartCSR: true
     });
+    hnui.title = require("./views/title-box.js");
+    hnui.screen.append(hnui.title);
 
     hnui.views = {
-        "stories": require("./views/topstories.js"),
-        "jobs"   : require("./views/jobstories.js"),
-        "job"    : require("./views/job.js")
+        "stories":   require("./views/topstories.js"),
+        "jobs":      require("./views/jobstories.js"),
+        "text-post": require("./views/text-post.js")
     }
 
     hnui.screen.key(config.keys.jobs, function(ch, key) {
@@ -33,9 +35,9 @@ exports.container = function() {
     });
 
     hnui.changeView = function(view, options) {
-        hnui.view[hnui.view].on("close", hnui);
+        hnui.views[hnui.view].emit("close", hnui);
         hnui.view = view;
-        hnui.views[view].on("render", hnui, options);
+        hnui.views[view].emit("render", hnui, options);
     };
 
     hnui.views[hnui.view].emit("render", hnui);

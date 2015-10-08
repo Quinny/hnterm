@@ -2,6 +2,8 @@
     "keys":        {
         "up":      "up",
         "down":    "down",
+        "right":   "right",
+        "left":    "left",
         "enter":   "enter",
         "quit":    ["escape", "q", "C-c"],
         "search":  "/",
