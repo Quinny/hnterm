@@ -14,6 +14,7 @@ pipeline.on("render", function(container, options) {
     container.screen.append(postList);
     postList.focus();
     container.title.content = "Jobs";
+    container.screen.render();
 
     hn.jobStories(function(s) {
         stories = s;

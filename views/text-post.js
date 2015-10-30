@@ -25,15 +25,18 @@ var box = blessed.box({
 var pipeline = new EventEmitter();
 var previousView = "";
 
-function fixNewLines(str) {
-    return str.replace(/<p>/g, '\n\n');
+function parseHTML(str) {
+    str = str.replace(/<p>/g, '\n\n');
+    str = str.replace(/<i>/g, '{i}');
+    str = str.replace(/<\/i>/g, '{\\i}');
+    return str;
 }
 
 pipeline.on("render", function(container, options) {
     container.screen.append(box);
     box.focus();
     container.title.content = options.post.title;
-    box.content = fixNewLines(entities.decodeHTML(options.post.text));
+    box.content = parseHTML(entities.decodeHTML(options.post.text));
     previousView = options.from;
     container.screen.render();
 });
