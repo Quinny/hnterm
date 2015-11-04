@@ -28,6 +28,6 @@
     },
     "homepage": "https://github.com/quinny/hnterm",
     "bin": {
-        "hnterm" : "./run"
+        "hnterm" : "./index.js"
     }
 }
