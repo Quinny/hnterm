@@ -16,7 +16,7 @@ pipeline.on("render", function(container, options) {
     container.title.content = "Jobs";
     container.screen.render();
 
-    hn.jobStories(function(s) {
+    hn.get("jobstories.json").then(function (s) {
         stories = s;
         postList.clearItems();
         for (var i = 0; i < s.length; ++i)

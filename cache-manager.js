@@ -7,7 +7,9 @@ function writeObject(obj, filename) {
     });
 }
 
-exports.put = function(code, data, expires) {
+exports.put = function(code, data) {
+    var expires = new Date();
+    expires.setHours(expires.getHours() + config.cache.expires_in_hours);
     var cacheObj = {
         expires: expires,
         data:    data

@@ -16,7 +16,7 @@ pipeline.on("render", function(container, options) {
     container.title.content = "Top Stories";
     container.screen.render();
 
-    hn.topStories(function(s) {
+    hn.get("topstories.json").then(function(s) {
         stories = s;
         postList.clearItems();
         for (var i = 0; i < s.length; ++i)

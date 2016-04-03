@@ -1,50 +1,48 @@
 var https   = require("https");
+var q       = require("q");
 var cache   = require("./cache-manager.js");
 var config  = require("./config.json");
 var baseUrl = "https://hacker-news.firebaseio.com/v0/";
 
 // Makes get request and calls callback with the returned JSON
 function getJSON(url, callback) {
+    var deferred = q.defer();
     https.get(url, function(res) {
         var ret = "";
         res.on("data", function(d) {
             ret += d;
-        });
-        res.on("end", function() {
-            callback(JSON.parse(ret));
+        }).on("end", function() {
+            deferred.resolve(JSON.parse(ret));
         });
     });
+    return deferred.promise;
 }
 
 // takes an id and gets the hacker news item
-function makeItem(id, callback) {
-    getJSON(baseUrl + "item/" + id + ".json", callback);
+function makeItem(id) {
+    return getJSON(baseUrl + "item/" + id + ".json");
 }
 
 // Curried to return a function that makes the API call with a callback
 function hnGet(endPoint) {
-    return function(callback) {
-        var check = cache.get(endPoint);
-        if (check)
-            return callback(check);
-        getJSON(baseUrl + endPoint, function (itemIds) {
-            last = itemIds[itemIds.length - 1];
-            var ret = [];
-            itemIds.forEach(function(id) {
-                makeItem(id, function(d) {
-                    ret.push(d);
-                    if (id == last) {
-                        var expires = new Date();
-                        expires.setHours(expires.getHours() +
-                                config.cache.expires_in_hours);
-                        cache.put(endPoint, ret, expires);
-                        callback(ret);
-                    }
-                });
-            });
-        });
-    };
+    var deferred = q.defer();
+    var check    = cache.get(endPoint);
+    if (check) {
+        deferred.resolve(check);
+        return deferred.promise;
+    }
+
+    getJSON(baseUrl + endPoint)
+        .then(function (x) {
+            return q.all(x.map(makeItem));
+        }).then(function (x) {
+            cache.put(endPoint, x, config.cache.expires_in_hours);
+            deferred.resolve(x);
+        })
+
+    return deferred.promise;
 }
 
-exports.topStories = hnGet("topstories.json");
-exports.jobStories = hnGet("jobstories.json");
+exports.get = function(x) {
+    return hnGet(x);
+}
