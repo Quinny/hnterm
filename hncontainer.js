@@ -2,6 +2,7 @@ var blessed = require("blessed");
 var hn      = require("./hn.js");
 var config  = require("./config.json");
 
+// Manages all of the views and the interactions between the views
 
 exports.container = function() {
     var hnui = this;

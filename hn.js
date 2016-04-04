@@ -4,8 +4,9 @@ var cache   = require("./cache-manager.js");
 var config  = require("./config.json");
 var baseUrl = "https://hacker-news.firebaseio.com/v0/";
 
-// Makes get request and calls callback with the returned JSON
-function getJSON(url, callback) {
+// Makes get request and returns the a promise
+// containing the JSON result
+function getJSON(url) {
     var deferred = q.defer();
     https.get(url, function(res) {
         var ret = "";
@@ -23,7 +24,7 @@ function makeItem(id) {
     return getJSON(baseUrl + "item/" + id + ".json");
 }
 
-// Curried to return a function that makes the API call with a callback
+// Returns a list of items from the given endpoint
 function hnGet(endPoint) {
     var deferred = q.defer();
     var check    = cache.get(endPoint);
@@ -36,7 +37,7 @@ function hnGet(endPoint) {
         .then(function (x) {
             return q.all(x.map(makeItem));
         }).then(function (x) {
-            cache.put(endPoint, x, config.cache.expires_in_hours);
+            cache.put(endPoint, x);
             deferred.resolve(x);
         })
 
