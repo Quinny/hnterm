@@ -10,13 +10,13 @@ function make(createOptions) {
     var stories  = [];
     var pipeline = new EventEmitter();
 
-    pipeline.on("render", function (container, renderOptions) {
+    pipeline.on("render", (container, renderOptions) => {
         container.screen.append(postList);
         postList.focus();
         container.title.content = createOptions.title;
         container.screen.render();
 
-        createOptions.fetchData().then(function (s) {
+        createOptions.fetchData().then(s => {
             stories = s;
             postList.clearItems();
             for (var i = 0; i < s.length; ++i)
@@ -26,23 +26,21 @@ function make(createOptions) {
         });
     });
 
-    pipeline.on("close", function(container) {
-        container.screen.remove(postList);
-    });
+    pipeline.on("close", container => container.screen.remove(postList));
 
-    pipeline.on(config.keys.up, function(container) {
+    pipeline.on(config.keys.up, container => {
         selected = Math.max(selected - 1, 0);
         postList.up(1);
         container.screen.render();
     });
 
-    pipeline.on(config.keys.down, function(container) {
+    pipeline.on(config.keys.down, container => {
         selected = Math.min(selected + 1, stories.length);
         postList.down(1);
         container.screen.render();
     });
 
-    pipeline.on(config.keys.enter, function(container) {
+    pipeline.on(config.keys.enter, container => {
         if (stories[selected].url) {
             spawn('open', [stories[selected].url]);
         }
@@ -55,9 +53,7 @@ function make(createOptions) {
         }
     });
 
-    createOptions.extras.forEach(function (key) {
-        pipeline.on(key.on, key.action);
-    });
+    createOptions.extras.forEach(key => pipeline.on(key.on, key.action));
 
     return pipeline;
 }

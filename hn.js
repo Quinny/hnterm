@@ -8,13 +8,10 @@ var baseUrl = "https://hacker-news.firebaseio.com/v0/";
 // containing the JSON result
 function getJSON(url) {
     var deferred = q.defer();
-    https.get(url, function(res) {
+    https.get(url, res => {
         var ret = "";
-        res.on("data", function(d) {
-            ret += d;
-        }).on("end", function() {
-            deferred.resolve(JSON.parse(ret));
-        });
+        res.on("data", d => ret += d)
+           .on("end", () => deferred.resolve(JSON.parse(ret)));
     });
     return deferred.promise;
 }
@@ -34,16 +31,13 @@ function hnGet(endPoint) {
     }
 
     getJSON(baseUrl + endPoint)
-        .then(function (x) {
-            return q.all(x.map(makeItem));
-        }).then(function (x) {
+        .then(x => q.all(x.map(makeItem)))
+        .then(x => {
             cache.put(endPoint, x);
             deferred.resolve(x);
-        })
+        });
 
     return deferred.promise;
 }
 
-exports.get = function(x) {
-    return hnGet(x);
-}
+exports.get = hnGet;

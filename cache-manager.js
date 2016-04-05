@@ -13,7 +13,7 @@ function writeObject(obj, filename) {
 }
 
 // Put data into the cache with the corresponding look up code
-exports.put = function(code, data) {
+exports.put = (code, data) => {
     var expires = new Date();
     expires.setHours(expires.getHours() + config.cache.expires_in_hours);
     var cacheObj = {
@@ -25,7 +25,7 @@ exports.put = function(code, data) {
 
 // Get an object from the cache by look up code
 // If the object does not exist OR has expired, false is returned
-exports.get = function(code) {
+exports.get = code => {
     var cacheObj = {};
     try {
         cacheObj = require(config.cache.dir + code);
